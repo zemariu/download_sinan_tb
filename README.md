@@ -11,7 +11,7 @@ e-mail: <zemariu@usp.br>
 
 <!-- badges: end -->
 
-## Função `download_sinan_tb()`
+## A Função `download_sinan_tb()`
 
 A função **`download_sinan_tb()`** foi criada para **automatizar o
 download de bases do SINAN (Sistema de Informação de Agravos de
@@ -22,7 +22,7 @@ Ela permite baixar dados de anos específicos ou de todos os anos
 disponíveis, salvar os arquivos em uma pasta escolhida no seu computador
 e, opcionalmente, forçar a atualização dos bancos já existentes.
 
-## Como funciona
+## Como funciona:
 
 - Após carregar o script com `source()`, a função passa a ficar
   disponível no ambiente do R.
@@ -33,7 +33,7 @@ e, opcionalmente, forçar a atualização dos bancos já existentes.
   arquivos serão salvos**. Recomenda-se utilizar uma pasta dedicada e
   organizada (ex.: `"BancosTB"`).
 
-## Principais argumentos
+## Principais argumentos:
 
 - **`anos`** → pode ser um ou mais anos (`2019:2023`) ou `"all"` para
   baixar todos os anos disponíveis.
@@ -77,6 +77,18 @@ Para instalar o pacote use:
 ``` r
 devtools::install_github("danicat/read.dbc")
 ```
+
+ou, alternativamente:
+
+``` r
+install.packages("read.dbc", 
+repos = "https://packagemanager.posit.co/cran/2024-07-05")
+```
+
+Maiores informações sobre o pacote estão disponíveis em:
+<https://github.com/danicat/read.dbc>.
+
+## Importando os arquivos
 
 A leitura posterior pode ser feita com o pacote **`read.dbc`**. Exemplo:
 

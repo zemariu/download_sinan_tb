@@ -20,19 +20,19 @@ e-mail: zemariu@usp.br
 <!-- badges: start -->
 <!-- badges: end -->
 
-## Função `download_sinan_tb()`
+## A Função `download_sinan_tb()`
 
 A função **`download_sinan_tb()`** foi criada para **automatizar o download de bases do SINAN (Sistema de Informação de Agravos de Notificação)** referentes à **tuberculose**, disponibilizadas em formato `.dbc` pelo **DATASUS**.
 
 Ela permite baixar dados de anos específicos ou de todos os anos disponíveis, salvar os arquivos em uma pasta escolhida no seu computador e, opcionalmente, forçar a atualização dos bancos já existentes.
 
-## Como funciona
+## Como funciona:
 
 * Após carregar o script com `source()`, a função passa a ficar disponível no ambiente do R.
 * No **RStudio**, você pode confirmar sua presença observando o painel **Environment** (canto superior direito), onde o nome `download_sinan_tb` aparecerá listado.
 * O argumento `directory` (ou `out_dir`) define **o local onde os arquivos serão salvos**. Recomenda-se utilizar uma pasta dedicada e organizada (ex.: `"BancosTB"`).
 
-## Principais argumentos
+## Principais argumentos:
 
 - **`anos`** → pode ser um ou mais anos (`2019:2023`) ou `"all"` para baixar todos os anos disponíveis.
 - **`directory`** → caminho da pasta onde os arquivos `.dbc` serão salvos.
@@ -73,6 +73,17 @@ Os arquivos baixados são salvos em formato `.dbc`, padrão do DATASUS. Para ins
 ```{r eval=FALSE}
 devtools::install_github("danicat/read.dbc")
 ```
+
+ou, alternativamente:
+
+```{r eval=FALSE}
+install.packages("read.dbc", 
+repos = "https://packagemanager.posit.co/cran/2024-07-05")
+```
+
+Maiores informações sobre o pacote estão disponíveis em: <https://github.com/danicat/read.dbc>.
+
+## Importando os arquivos
 
 A leitura posterior pode ser feita com o pacote **`read.dbc`**. Exemplo:
 
