@@ -13,23 +13,75 @@ knitr::opts_chunk$set(
 
 # download_sinan_tb
 
+Autor: José Mário Nunes da Silva
+
+e-mail: zemariu@usp.br
+
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of download_sinan_tb is to ...
+## Função `download_sinan_tb()`
 
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
+A função **`download_sinan_tb()`** foi criada para **automatizar o download de bases do SINAN (Sistema de Informação de Agravos de Notificação)** referentes à **tuberculose**, disponibilizadas em formato `.dbc` pelo **DATASUS**.
 
-```{r cars}
-summary(cars)
+Ela permite baixar dados de anos específicos ou de todos os anos disponíveis, salvar os arquivos em uma pasta escolhida no seu computador e, opcionalmente, forçar a atualização dos bancos já existentes.
+
+## Como funciona
+
+* Após carregar o script com `source()`, a função passa a ficar disponível no ambiente do R.
+* No **RStudio**, você pode confirmar sua presença observando o painel **Environment** (canto superior direito), onde o nome `download_sinan_tb` aparecerá listado.
+* O argumento `directory` (ou `out_dir`) define **o local onde os arquivos serão salvos**. Recomenda-se utilizar uma pasta dedicada e organizada (ex.: `"BancosTB"`).
+
+## Principais argumentos
+
+- **`anos`** → pode ser um ou mais anos (`2019:2023`) ou `"all"` para baixar todos os anos disponíveis.
+- **`directory`** → caminho da pasta onde os arquivos `.dbc` serão salvos.
+- **`overwrite`** (padrão = `FALSE`) → se `TRUE`, força o re-download mesmo que o arquivo já exista na pasta.
+
+
+## Exemplos de uso
+
+### Baixar anos específicos
+
+```{r eval=FALSE}
+# Baixa somente 2020 e 2021 
+download_sinan_tb(anos = 2020:2021, 
+                  directory = "BancosTB")
 ```
 
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date.
+### Baixar todos os anos disponíveis
 
-You can also embed plots, for example:
-
-```{r pressure, echo = FALSE}
-plot(pressure)
+```{r eval=FALSE}
+# Baixa todos os anos disponíveis no DATASUS
+download_sinan_tb(anos = "all", 
+                  directory = "BancosTB")
 ```
 
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub.
+### Forçar atualização
+
+```{r eval=FALSE}
+# Rebaixa arquivos de 2019 a 2023 mesmo que já existam
+download_sinan_tb(anos = 2019:2023, 
+                  directory = "BancosTB", 
+                  overwrite = TRUE)
+```
+
+## Observações
+
+Os arquivos baixados são salvos em formato `.dbc`, padrão do DATASUS. Para instalar o pacote use:
+
+```{r eval=FALSE}
+devtools::install_github("danicat/read.dbc")
+```
+
+A leitura posterior pode ser feita com o pacote **`read.dbc`**. Exemplo:
+
+```{r eval=FALSE}
+library(read.dbc)
+dadostb <- read.dbc("BancosTB/TUBEBR23.dbc")
+```
+
+Garanta que sua pasta de destino (`directory`) já exista ou crie-a antes de rodar a função.
+
+
+

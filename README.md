@@ -3,6 +3,10 @@
 
 # download_sinan_tb
 
+Autor: José Mário Nunes da Silva
+
+e-mail: <zemariu@usp.br>
+
 <!-- badges: start -->
 
 <!-- badges: end -->
