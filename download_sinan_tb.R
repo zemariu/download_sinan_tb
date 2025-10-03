@@ -6,7 +6,7 @@
 #'-------------------------------------------------------------------
 #' Exemplo:
 #' Baixar todos os anos disponíveis
-#' download_sinan_tb(anos = "all", out_dir = "~/CursoR/BancosTB")
+#' download_sinan_tb(anos = "all", directory = "~/CursoR/BancosTB")
 #' Baixar só 2020 e 2021
 #' sinan_tb(anos = 2020:2021, diretorio = "~/CursoR/BancosTB")
 #' OBS: Para substituir arquivos já existentes, use overwrite = TRUE
@@ -19,12 +19,12 @@ download_sinan_tb <- function(
     quiet = FALSE               # suprimir mensagens
 ){
   stopifnot(length(anos) >= 1 || identical(anos, "all"))
-  
+
   urls_base <- c(
     "ftp://ftp.datasus.gov.br/dissemin/publicos/SINAN/DADOS/FINAIS/",
     "ftp://ftp.datasus.gov.br/dissemin/publicos/SINAN/DADOS/PRELIM/"
   )
-  
+
   listar_ftp <- function(url){
     if (requireNamespace("RCurl", quietly = TRUE)) {
       txt <- RCurl::getURL(url, ftp.use.epsv = FALSE, dirlistonly = TRUE)
@@ -39,7 +39,7 @@ download_sinan_tb <- function(
       paste0(url, ent)
     }
   }
-  
+
   # extrator de ano (2 dígitos no final do nome)
   get_ano <- function(nome){
     m2 <- regmatches(nome, regexpr("\\d{2}(?=\\.dbc$)", nome, perl = TRUE))
@@ -51,11 +51,11 @@ download_sinan_tb <- function(
     if (length(m4) && nzchar(m4)) return(as.integer(m4))
     return(NA_integer_)
   }
-  
+
   if (!quiet) message("Listando FTP (FINAIS e PRELIM)...")
   lista <- unlist(lapply(urls_base, listar_ftp), use.names = FALSE)
   if (!length(lista)) stop("Nenhum arquivo encontrado.")
-  
+
   lista <- lista[grepl("TUBEBR", lista, ignore.case = TRUE)]  # só tuberculose BR
   df <- data.frame(
     url  = lista,
@@ -63,29 +63,29 @@ download_sinan_tb <- function(
     file = basename(lista),
     stringsAsFactors = FALSE
   )
-  
+
   df$ano <- vapply(df$file, get_ano, integer(1))
-  
+
   if (!identical(anos, "all")) {
     df <- df[!is.na(df$ano) & df$ano %in% as.integer(anos), , drop = FALSE]
     if (!nrow(df)) stop("Nenhum arquivo corresponde aos anos informados.")
   }
-  
+
   # priorizar FINAIS
   ord <- ifelse(df$base == "FINAIS", 1L, 2L)
   df <- df[order(df$file, ord), ]
   df <- df[!duplicated(df$file), ]
-  
+
   if (!dir.exists(out_dir)) dir.create(out_dir, recursive = TRUE, showWarnings = FALSE)
   df$dest <- file.path(out_dir, df$file)
   df$existe <- file.exists(df$dest)
   df$baixar <- if (overwrite) TRUE else !df$existe
-  
+
   if (!quiet) {
     message("Arquivos candidatos: ", nrow(df))
     message("Precisam baixar:     ", sum(df$baixar))
   }
-  
+
   if (any(df$baixar)) {
     idx <- which(df$baixar)
     for (k in seq_along(idx)) {
@@ -98,6 +98,6 @@ download_sinan_tb <- function(
   } else if (!quiet) {
     message("Nada a baixar (use overwrite=TRUE para substituir).")
   }
-  
+
   invisible(df[, c("file","ano","base","url","dest","baixar","existe")])
 }
