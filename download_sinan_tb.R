@@ -6,9 +6,9 @@
 #'-------------------------------------------------------------------
 #' Exemplo:
 #' Baixar todos os anos disponíveis
-#' download_sinan_tb(anos = "all", directory = "~/CursoR/BancosTB")
+#' download_sinan_tb(anos = "all", directory = "BancosTB")
 #' Baixar só 2020 e 2021
-#' sinan_tb(anos = 2020:2021, diretorio = "~/CursoR/BancosTB")
+#' sinan_tb(anos = 2020:2021, directory = "BancosTB")
 #' OBS: Para substituir arquivos já existentes, use overwrite = TRUE
 #--------------------------------------------------------------------
 
