@@ -76,8 +76,8 @@ download_sinan_tb <- function(
   df <- df[order(df$file, ord), ]
   df <- df[!duplicated(df$file), ]
 
-  if (!dir.exists(out_dir)) dir.create(out_dir, recursive = TRUE, showWarnings = FALSE)
-  df$dest <- file.path(out_dir, df$file)
+  if (!dir.exists(directory)) dir.create(directory, recursive = TRUE, showWarnings = FALSE)
+  df$dest <- file.path(directory, df$file)
   df$existe <- file.exists(df$dest)
   df$baixar <- if (overwrite) TRUE else !df$existe
 
