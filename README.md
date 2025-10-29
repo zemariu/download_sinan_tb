@@ -69,6 +69,9 @@ download_sinan_tb(anos = 2019:2023,
                   overwrite = TRUE)
 ```
 
+Garanta que sua pasta de destino (`directory`) já exista ou crie-a antes
+de rodar a função.
+
 ## Observações
 
 Os arquivos baixados são salvos em formato `.dbc`, padrão do DATASUS.
@@ -96,6 +99,3 @@ A leitura posterior pode ser feita com o pacote **`read.dbc`**. Exemplo:
 library(read.dbc)
 dadostb <- read.dbc("BancosTB/TUBEBR23.dbc")
 ```
-
-Garanta que sua pasta de destino (`directory`) já exista ou crie-a antes
-de rodar a função.
